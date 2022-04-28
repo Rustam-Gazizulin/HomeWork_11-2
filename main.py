@@ -1,26 +1,32 @@
-class Candidates:
+from flask import Flask, render_template
+import utils
 
-    def __init__(self, list_candidates, candidate_id, candidate_name, candidate_skill):
-        self.list_candidates = list_candidates
-        self.candidate_id = candidate_id
-        self.candidate_name = candidate_name
-        self.candidate_skill = candidate_skill
+app = Flask(__name__)
 
-    def __repr__(self):
-        return f'{self.list_candidates}\n{self.candidate_id}\n{self.candidate_name}\n{self.candidate_skill}'
+data = utils.load_candidates_from_json("candidates.json")
 
-    def load_candidates_from_json(self):
-        '''возвращает список всех кандидатов'''
-        with open("data/candidates.json", "r", encoding="utf-8") as file:
-            
+@app.route("/")
+def list_candidates():
+    """Главная страница со списком кандидатов"""
 
-        pass
+    return render_template("list.html", candidates=data)
 
-    def get_candidate(self):
-        pass
+@app.route("/candidate/<int:candidate_id>")
+def page_candidate(candidate_id):
+    """Страница кандидата по id"""
+    candidate = utils.get_candidate(candidate_id)
+    return render_template("card.html", candidate=candidate)
 
-    def get_candidates_by_name(self):
-        pass
+@app.route("/search/<string:candidate_name>")
+def list_candidates_by_name(candidate_name):
+    """Страница кандидатов по имени"""
+    candidates = utils.get_candidates_by_name(candidate_name)
+    return render_template("search.html", candidates=candidates, count=len(candidates))
 
-    def get_candidates_by_skill(self):
-        pass
+@app.route("/skill/<string:skill_name>")
+def list_candidates_by_skill(skill_name):
+    """Страница кандидатов по навыку"""
+    candidates = utils.get_candidates_by_skill(skill_name)
+    return render_template("skills.html", candidates=candidates, count=len(candidates), s=skill_name)
+
+app.run()
