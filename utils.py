@@ -20,15 +20,7 @@ def get_candidate(candidate_id):
 def get_candidates_by_name(candidate_name):
     """возвращает кандидатов по имени"""
     candidates = load_candidates_from_json("candidates.json")
-    list_candidate_by_name = []
-
-    for candidate in candidates:
-        if candidate_name.lower() in candidate["name"].lower():
-            list_candidate_by_name.append(candidate)
-
-    return list_candidate_by_name
-
-
+    return [candidate for candidate in candidates if candidate_name.lower() in candidate["name"].lower()]
 
 
 def get_candidates_by_skill(skill_name):
