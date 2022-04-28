@@ -5,7 +5,7 @@
     <title>Кандидаты с навыком</title>
 </head>
 <body>
-    <h1>Найдено со скиллом "{{s}}", {{count}}: </h1>
+    <h1>Найдено со скиллом "{{s}}" - {{count}} кандидатов: </h1>
     {% for candidate in candidates %}
         <p><a href="/candidate/{{candidate.id}}">{{candidate.name}}</a></p>
     {% endfor %}
