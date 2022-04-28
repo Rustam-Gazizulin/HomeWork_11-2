@@ -29,14 +29,10 @@ def get_candidates_by_name(candidate_name):
 def get_candidates_by_skill(skill_name):
     """возвращает кандидатов по навыку"""
 
+    return [candidate for candidate in __data if skill_name.lower() in candidate["skills"].lower()]
 
-    list_candidate_by_skill = []
 
-    for candidate in __data:
-        if skill_name.lower() in candidate["skills"].lower().split(", "):
-            list_candidate_by_skill.append(candidate)
 
-    return list_candidate_by_skill
 
 
 
